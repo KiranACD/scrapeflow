@@ -1,4 +1,4 @@
-import { getWorkflowsFromUser } from '@/actions/getWorkflowsForUser'
+import { getWorkflowsFromUser } from '@/actions/workflows/getWorkflowsForUser'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Skeleton } from '@/components/ui/skeleton'
 import { waitFor } from '@/lib/helper/waitFor'

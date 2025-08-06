@@ -21,7 +21,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useMutation } from '@tanstack/react-query';
-import { CreateWorkflow } from '@/actions/createWorkflow';
+import { CreateWorkflow } from '@/actions/workflows/createWorkflow';
 import { toast } from 'sonner';
 
 function CreateWorkflowDialog({triggerText}: {triggerText?: string}) {

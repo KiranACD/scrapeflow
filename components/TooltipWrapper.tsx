@@ -16,18 +16,17 @@ interface Props {
 }
 
 function TooltipWrapper(props: Props) {
+    console.log(props);
   return (
     <TooltipProvider delayDuration={0}>
         <Tooltip>
             <TooltipTrigger asChild>
                 {props.children}
             </TooltipTrigger>
-            <TooltipContent side={props.side}>
-                {props.content}
-            </TooltipContent>
+            <TooltipContent side={props.side}><span>{props.content}</span></TooltipContent>
         </Tooltip>
     </TooltipProvider>
-  )
+  );
 }
 
-export default TooltipWrapper
+export default TooltipWrapper;

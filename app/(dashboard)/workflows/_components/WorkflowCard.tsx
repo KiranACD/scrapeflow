@@ -5,9 +5,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { WorkflowStatus } from '@/types/workflow';
 import { Workflow } from '@prisma/client';
-import { FileTextIcon, MoreVertical, MoreVerticalIcon, PlayIcon, ShuffleIcon } from 'lucide-react';
+import { FileTextIcon, MoreVertical, MoreVerticalIcon, PlayIcon, ShuffleIcon, TrashIcon } from 'lucide-react';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -17,6 +17,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import TooltipWrapper from '@/components/TooltipWrapper';
+import DeleteWorkflowDialog from './DeleteWorkflowDialog';
 
 const statusColors = {
     [WorkflowStatus.DRAFT]: "bg-yellow-400 text-yellow-600",
@@ -65,24 +66,50 @@ function WorkflowCard({workflow}: {workflow: Workflow}) {
                     <ShuffleIcon size={16}/>
                     Edit
                 </Link>
-                <WorkflowActions />
+                <WorkflowActions workflowName={workflow.name} workflowId={workflow.id}/>
             </div>
         </CardContent>
     </Card>
   )
 }
 
-function WorkflowActions() {
+function WorkflowActions({workflowName, workflowId}: {workflowName: string, workflowId: string}) {
+
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     return (
+        <>
+        <DeleteWorkflowDialog 
+            open={showDeleteDialog} 
+            setOpen={setShowDeleteDialog} 
+            workflowName={workflowName}
+            workflowId={workflowId}
+        />
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant={"outline"} size={"sm"}>
                     <TooltipWrapper content={"More actions"}>
-                        <MoreVerticalIcon size={18}/>
+                        <div className="flex items-center justify-center h-full w-full">
+                            <MoreVerticalIcon size={18}/>
+                        </div>
                     </TooltipWrapper>
                 </Button>
             </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem 
+                    className="text-destructive flex items-center gap-2"
+                    onSelect={() => {
+                        setShowDeleteDialog((prev) =>!prev)
+                    }}
+                    >
+                    <TrashIcon size={16} />
+                    Delete
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+            
         </DropdownMenu>
+        </>
     )
 }
 
